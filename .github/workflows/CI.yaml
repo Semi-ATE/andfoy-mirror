@@ -27,13 +27,8 @@ jobs:
     - name: Install mamba & environment
       uses: mamba-org/provision-with-micromamba@v10
         
-    - name: Solve and test-build meta-packages
+    - name: Mirror Qt packages
       shell: bash -l {0}
-      run: |
-        ls -la
-                
-        #conda config --set channel_priority false
-        #mkdir build
-        #cd build
-        #python -u ../scripts/maxiconda.py --solve --build $SUBDIR
-
+      run: |    
+        conda config --set channel_priority false
+        python -u ../scripts/mirror.py
