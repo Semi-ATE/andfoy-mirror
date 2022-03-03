@@ -28,12 +28,13 @@ jobs:
     - name: Install mamba & environment
       uses: mamba-org/provision-with-micromamba@v10
         
-    - name: Mirror Qt packages
+    - name: Mirror ${{ matrix.SUBDIR }} packages
       shell: bash -l {0}
+      env:
+        ANACONDA_UPLOAD_TOKEN: ${{ secrets.ANACONDA_UPLOAD_TOKEN }}
       run: |
         mkdir -p sandbox
         cd sandbox
-        echo $ANACONDA_UPLOAD_TOKEN
         python -u ../scripts/mirror.py $SUBDIR -t $ANACONDA_UPLOAD_TOKEN
         
     - name: Upload artifacts
