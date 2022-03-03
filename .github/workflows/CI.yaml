@@ -43,3 +43,6 @@ jobs:
         name: ${{ matrix.SUBDIR }}_mirrored_packages
         path: sandbox/
 
+    - name: Cleanup
+      shell: bash -l {0}
+      run: rm -rf sandbox
