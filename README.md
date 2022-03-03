@@ -5,4 +5,4 @@
 [![GitHub issues](https://img.shields.io/github/issues/Semi-ATE/andfoy-mirror)](https://github.com/Semi-ATE/andfoy-mirror/issues)
 [![GitHub pull requests](https://img.shields.io/github/issues-pr/Semi-ATE/andfoy-mirror)](https://github.com/Semi-ATE/andfoy-mirror/pulls)
 
-In this repository we mirror the Qt stuff from the [andfoy](https://anaconda.org/andfoy/) channel to the [Semi-ATE](https://anaconda.org/Semi-ATE) channel twice per day.
+In this repository we mirror the Qt stuff from the [andfoy](https://anaconda.org/andfoy/) channel to the [Semi-ATE](https://anaconda.org/Semi-ATE) channel twice per day (@ 1AM & 1PM).
