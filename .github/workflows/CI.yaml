@@ -31,4 +31,4 @@ jobs:
       shell: bash -l {0}
       run: |    
         conda config --set channel_priority false
-        python -u ../scripts/mirror.py
+        python -u ./scripts/mirror.py
