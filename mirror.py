@@ -11,34 +11,46 @@ import requests
 import json
 import bz2
 import subprocess
-import shutil
 import argparse
+import yaml
 
-supported_subdirs = [
-    'noarch',
-    'linux-64', 
-    'linux-aarch64', 
-    'win-64', 
-    'osx-64', 
-    'osx-arm64',
-]
-packages_to_mirror = [
-    'pyqt',
-    'pyqtwebengine',
-    'pyqtchart',
-    'pyqt-impl',
-    'pyqt5-sip',
-    'qt-webengine',
-]
-source_channel = 'andfoy'
-destination_channel = 'Semi-ATE'
+# supported_subdirs = [
+#     'noarch',
+#     'linux-64', 
+#     'linux-aarch64', 
+#     'win-64', 
+#     'osx-64', 
+#     'osx-arm64',
+# ]
+# packages_to_mirror = [
+#     'pyqt',
+#     'pyqtwebengine',
+#     'pyqtchart',
+#     'pyqt-impl',
+#     'pyqt5-sip',
+#     'qt-webengine',
+# ]
+# source_channel = 'andfoy'
+# destination_channel = 'Semi-ATE'
 
 class Mirror:
 
     def __init__(self, subdir, token):
+        self.repo_root = os.path.dirname(os.path.normpath(__file__))
+
+        self.download_folder = os.path.join(self.repo_root, 'download')
+        os.makedirs(self.download_folder, exist_ok=True)
+
+        self.setup_fpath = os.path.join(self.repo_root, "mirror.yaml")
+        with open(self.setup_fpath) as fd:
+            self.setup = yaml.load(fd, Loader=yaml.FullLoader)
+        
+        if subdir not in self.setup['subdirs']:
+            raise KeyError
+        
         print(f"mirorring {subdir} packages :")
-        source_packages = self.get_conda_packages_from(source_channel, subdir)
-        mirrored_packages = self.get_conda_packages_from(destination_channel, subdir)
+        source_packages = self.get_conda_packages_from(self.setup['source_channel'], subdir)
+        mirrored_packages = self.get_conda_packages_from(self.setup['destination_channel'], subdir)
         for package in source_packages:
             if package not in mirrored_packages:
                 self.mirror_package(subdir, package, token)
@@ -59,7 +71,7 @@ class Mirror:
         available_packages = []
         for package in all_packages:
             package_name = all_packages[package]['name']
-            if package_name in packages_to_mirror:
+            if package_name in self.setup['packages_to_mirror']:
                 available_packages.append(package)
         return available_packages
         
@@ -69,9 +81,10 @@ class Mirror:
         package_name = "-".join(package_parts[0:-2])
         url = f"https://anaconda.org/{channel}/{package_name}/{package_version}/download/{subdir}/{package}"
         data = requests.get(url, allow_redirects=True)
-        with open(package, 'wb') as fd:
+        package_fpath = os.path.join(self.download_folder, package) 
+        with open(package_fpath, 'wb') as fd:
             fd.write(data.content)
-        return os.path.join(os.getcwd(), package)
+        return package_fpath
     
     def upload_package(self, channel, path_to_package, token):
         retval = True
@@ -87,22 +100,17 @@ class Mirror:
     
     def mirror_package(self, subdir, package, token):
         print(f"  {package} ... ", end="", flush=True)
-        abs_package_file = self.download_package(source_channel, subdir, package)
-        if self.upload_package(destination_channel, abs_package_file, token):
+        abs_package_file = self.download_package(self.setup['source_channel'], subdir, package)
+        if self.upload_package(self.setup['destination_channel'], abs_package_file, token):
             print("Done.")
         else:
             print("Failed !!!")
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('SUBDIR', type=str, default="noarch", help=f"The SUBDIR to work with. {supported_subdirs}")
-    parser.add_argument('-t', type=str, help=f"anaconda.org token for the '{destination_channel}' channel.")
+    parser.add_argument('SUBDIR', type=str, default="noarch", help="The SUBDIR to work with.")
+    parser.add_argument('-t', type=str, help="anaconda.org token for the destination channel.")
     args = parser.parse_args()
-    
-    if args.SUBDIR not in supported_subdirs:
-        print(f"Error: '{args.SUBDIR}' is not supported, should be one of {supported_subdirs}")
-        parser.print_help()
-        sys.exit(1)
-                
+                    
     mirror = Mirror(args.SUBDIR, args.t)
     
