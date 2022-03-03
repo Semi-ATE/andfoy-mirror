@@ -1,10 +1,7 @@
 # andfoy-mirror
 
 [![GitHub](https://img.shields.io/github/license/Semi-ATE/andfoy-mirror?color=black)](https://github.com/Semi-ATE/andfoy-mirror/blob/main/LICENSE)
-
-
 [![Continuous Integration](https://github.com/Semi-ATE/andfoy-mirror/actions/workflows/CI.yaml/badge.svg)](https://github.com/Semi-ATE/andfoy-mirror/actions/workflows/CI.yaml)
-
 [![GitHub issues](https://img.shields.io/github/issues/Semi-ATE/andfoy-mirror)](https://github.com/Semi-ATE/andfoy-mirror/issues)
 [![GitHub pull requests](https://img.shields.io/github/issues-pr/Semi-ATE/andfoy-mirror)](https://github.com/Semi-ATE/andfoy-mirror/pulls)
 
