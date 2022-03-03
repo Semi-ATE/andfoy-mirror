@@ -3,12 +3,8 @@ channels:
   - conda-forge
   - semi-ate
 dependencies:
-  - python=3.8
-  - psutil
+  - python=3.9
   - anaconda-client
   - conda-build
   - mamba
-  - openpyxl
-  - pyyaml
   - requests
-  - pyyaml
