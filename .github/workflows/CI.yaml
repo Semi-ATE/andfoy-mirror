@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  schedule:
+    - cron: 0 0 * * *
+  workflow_dispatch:
+
+jobs:
+  mirror:
+    name: ${{ matrix.SUBDIR }}
+    runs-on: ubuntu-latest
+    env:
+      SUBDIR: ${{ matrix.SUBDIR }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - SUBDIR: win-64
+          - SUBDIR: linux-64
+          - SUBDIR: linux-aarch64
+          - SUBDIR: osx-64
+          - SUBDIR: osx-arm64
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install mamba & environment
+      uses: mamba-org/provision-with-micromamba@v10
+        
+    - name: Solve and test-build meta-packages
+      shell: bash -l {0}
+      run: |
+        ls -la
+                
+        #conda config --set channel_priority false
+        #mkdir build
+        #cd build
+        #python -u ../scripts/maxiconda.py --solve --build $SUBDIR
+
