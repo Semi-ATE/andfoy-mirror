@@ -42,6 +42,7 @@ class Mirror:
         for package in source_packages:
             if package not in mirrored_packages:
                 self.mirror_package(subdir, package, token)
+        print("Finished.")
 
     def get_conda_packages_from(self, channel, subdir):
         def get_repo_data(url):
