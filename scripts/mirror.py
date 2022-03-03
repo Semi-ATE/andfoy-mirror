@@ -92,8 +92,6 @@ class Mirror:
             print("Done.")
         else:
             print("Failed !!!")
-        os.remove(abs_package_file)
-
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
