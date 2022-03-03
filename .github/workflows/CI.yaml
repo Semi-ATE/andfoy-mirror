@@ -33,6 +33,7 @@ jobs:
       run: |
         mkdir -p sandbox
         cd sandbox
+        echo $ANACONDA_UPLOAD_TOKEN
         python -u ../scripts/mirror.py $SUBDIR -t $ANACONDA_UPLOAD_TOKEN
         
     - name: Upload artifacts
