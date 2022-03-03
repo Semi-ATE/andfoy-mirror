@@ -32,10 +32,7 @@ jobs:
       shell: bash -l {0}
       env:
         ANACONDA_UPLOAD_TOKEN: ${{ secrets.ANACONDA_UPLOAD_TOKEN }}
-      run: |
-        mkdir -p sandbox
-        cd sandbox
-        python -u ../scripts/mirror.py $SUBDIR -t $ANACONDA_UPLOAD_TOKEN
+      run: python -u mirror.py $SUBDIR -t $ANACONDA_UPLOAD_TOKEN
         
     - name: Upload artifacts
       uses: actions/upload-artifact@v2
@@ -45,4 +42,4 @@ jobs:
 
     - name: Cleanup
       shell: bash -l {0}
-      run: rm -rf sandbox
+      run: rm -rf download
