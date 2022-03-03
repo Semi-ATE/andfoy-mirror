@@ -10,7 +10,7 @@ subdirs:
   - osx-64 
   - osx-arm64
 
-packages:
+packages_to_mirror:
   - pyqt
   - pyqtwebengine
   - pyqtchart

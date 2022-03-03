@@ -1,3 +1,6 @@
+# Download folder
+download/
+
 # Temporary and binary files
 *~
 *.py[cod]
