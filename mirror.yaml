@@ -1,19 +1,26 @@
-source_channel: andfoy
+mirror:
+  - packages: [pyqt, pyqtwebengine, pyqtchart, pyqt-impl, pyqt5-sip, qt-webengine]  
+    source: andfoy
+    destination: Semi-ATE
+    token: ${{ SEMI_ATE_UPLOAD_TOKEN }}
+    
+  - packages: [pyqt, pyqtwebengine, pyqtchart, pyqt-impl, pyqt5-sip, qt-webengine]
+    source: andfoy
+    destination: nerohmot
+    token: ${{ NEROHMOT_UPLAOAD_TOKEN }}  
 
-destination_channel: Semi-ATE
-
-subdirs:
-  - noarch
-  - linux-64 
-  - linux-aarch64 
-  - win-64 
-  - osx-64 
-  - osx-arm64
-
-packages_to_mirror:
-  - pyqt
-  - pyqtwebengine
-  - pyqtchart
-  - pyqt-impl
-  - pyqt5-sip
-  - qt-webengine
+  - packages: qt-main
+    source: conda-forge
+    destination: nerohmot
+    token: ${{ NEROHMOT_UPLAOAD_TOKEN }}
+    
+  - packages: bitarray
+    subdirs: [linux-64, linux-aarch64, osx-64, win-64]
+    source: conda-forge
+    destination: nerohmot
+    token: ${{ NEROHMOT_UPLAOAD_TOKEN }}
+    
+  - packages: bitarray
+    source: conda-forge
+    destination: nerohmot
+    token: ${{ NEROHMOT_UPLAOAD_TOKEN }}
