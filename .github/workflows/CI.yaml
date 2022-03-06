@@ -7,20 +7,11 @@ on:
 
 jobs:
   mirror:
-    name: ${{ matrix.SUBDIR }}
+    name: conda-mirror-bot
     runs-on: ubuntu-latest
-    env:
-      SUBDIR: ${{ matrix.SUBDIR }}
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - SUBDIR: noarch
-          - SUBDIR: win-64
-          - SUBDIR: linux-64
-          - SUBDIR: linux-aarch64
-          - SUBDIR: osx-64
-          - SUBDIR: osx-arm64
+    defaults:
+      run:
+        shell: bash -l {0}
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -28,18 +19,15 @@ jobs:
     - name: Install mamba & environment
       uses: mamba-org/provision-with-micromamba@v10
         
-    - name: Mirror ${{ matrix.SUBDIR }} packages
-      shell: bash -l {0}
+    - name: Mirror packages
       env:
-        ANACONDA_UPLOAD_TOKEN: ${{ secrets.ANACONDA_UPLOAD_TOKEN }}
-      run: python -u mirror.py $SUBDIR -t $ANACONDA_UPLOAD_TOKEN
+        SEMIATE_UPLOAD_TOKEN: ${{ secrets.SEMIATE_UPLOAD_TOKEN }}
+        NEROHMOT_UPLOAD_TOLEN: ${{ secrets.NEROHMOT_UPLOAD_TOLEN }}
+      run: python -u mirror.py
         
     - name: Upload artifacts
       uses: actions/upload-artifact@v2
       with:
-        name: ${{ matrix.SUBDIR }}_mirrored_packages
+        name: new_uploads
         path: download/
-
-    - name: Cleanup
-      shell: bash -l {0}
-      run: rm -rf download
+        
