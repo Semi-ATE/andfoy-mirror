@@ -24,5 +24,3 @@ mirror:
     source: conda-forge
     destination: nerohmot
     token: ${{ NEROHMOT_UPLAOAD_TOKEN }}
-    
-      

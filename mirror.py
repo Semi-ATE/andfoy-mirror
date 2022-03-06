@@ -214,6 +214,7 @@ class Mirror:
                 self.upload_package(destination, package_fpath, token)
                 print("🠕", end="", flush=True)
             print(" Done.")
+
         
     def download_package(self, channel, subdir, package):
         package_parts = package.split("-")
@@ -247,3 +248,4 @@ if __name__ == '__main__':
     os.environ['SEMI_ATE_UPLOAD_TOKEN'] = "Se-0c36792b-1b02-4bfa-8d3d-10e2ecea1df7"
     os.environ['NEROHMOT_UPLAOAD_TOKEN'] = "ne-6e4be89f-1db2-4e0e-8289-8082cc0eb63b"
     mirror = Mirror()
+

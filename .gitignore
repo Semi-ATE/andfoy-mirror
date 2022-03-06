@@ -16,5 +16,3 @@ __pycache__/*
 *.eggs/
 .installed.cfg
 *.egg-info
-
-
