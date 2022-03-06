@@ -2,7 +2,7 @@ name: CI
 
 on:
   schedule:
-    - cron: 00 01,13 * * *
+    - cron: 00 01,07,13,19 * * *
   workflow_dispatch:
 
 jobs:
